@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ لوحة الخدمات الرقمية الفاخرة | SMM Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ لوحة خدمات THANATOS CYBER | SMM Panel</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,37 +31,40 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px 10px 80px 10px; /* مساحة بالأسفل لعدم تداخل المحتوى مع شريط التنقل */
         }
 
+        /* ضبط الحاوية لتناسب مقاس شاشة البوت الهاتفي */
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: 480px; 
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px 10px;
             border-bottom: 2px solid var(--bg-card);
         }
 
         header h1 {
             color: var(--neon-blue);
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             text-shadow: 0 0 10px var(--neon-glow);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .counter-badge {
             background: var(--bg-card);
             border: 1px solid var(--neon-blue);
             box-shadow: 0 0 15px var(--neon-glow);
-            padding: 8px 20px;
+            padding: 6px 15px;
             border-radius: 50px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 0.85rem;
             font-weight: bold;
         }
 
@@ -69,45 +72,56 @@
             color: var(--neon-blue);
         }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
+        /* نظام القوائم والصفحات */
+        .page {
+            display: none; /* إخفاء كافة الصفحات افتراضياً */
         }
 
-        @media (max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; }
+        .page.active {
+            display: block; /* إظهار الصفحة النشطة فقط */
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .panel-card {
             background: var(--bg-card);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px 15px;
             border: 1px solid rgba(0, 240, 255, 0.1);
+            margin-bottom: 20px;
         }
 
         .card-title {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             color: var(--neon-blue);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
+        /* ضبط مرونة الجداول للشاشات الضيقة */
         .table-wrapper {
+            width: 100%;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: right;
+            font-size: 0.85rem;
         }
 
         th, td {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border-bottom: 1px solid rgba(143, 160, 181, 0.1);
+            white-space: nowrap; /* يمنع انكسار السطر وتشويه النص */
         }
 
         th {
@@ -116,59 +130,92 @@
         }
 
         td { color: var(--text-main); }
-        .text-muted { color: var(--text-muted); }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
-        select, input {
+        select, input, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: var(--bg-main);
             border: 1px solid rgba(0, 240, 255, 0.2);
             border-radius: 6px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: 0.3s;
         }
 
-        select:focus, input:focus {
+        select:focus, input:focus, textarea:focus {
             border-color: var(--neon-blue);
             box-shadow: 0 0 10px var(--neon-glow);
         }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             background: linear-gradient(45deg, #00b4d8, var(--neon-blue));
             border: none;
             border-radius: 6px;
             color: white;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
             transition: 0.3s;
         }
 
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--neon-glow);
+        /* شريط التنقل السفلي الاحترافي للهواتف */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(0, 240, 255, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
         }
 
-        #responseMessage {
-            margin-top: 15px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1rem;
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            background: none;
+            border: none;
+            width: 20%;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-glow);
+        }
+
+        .info-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -179,46 +226,11 @@
         <h1>💎 THANATOS CYBER</h1>
         <div class="counter-badge">
             <i class="fa-solid fa-users-viewfinder"></i>
-            المستخدمين النشطين اليوم: <span>387,823 daily users</span>
+            <span>387,823 daily users</span>
         </div>
     </header>
 
-    <div class="main-grid">
-        <div class="panel-card">
-            <div class="card-title">
-                <i class="fa-solid fa-list-check"></i> قائمة الخدمات المتوفرة
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>الرقم</th>
-                            <th>الخدمة</th>
-                            <th>السعر لكل 1000</th>
-                            <th>الأدنى</th>
-                            <th>الأقصى</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>متابعين إنستغرام | سرعة فائقة وضمان 30 يوم</td>
-                            <td style="color: #00ff66;">$1.00</td>
-                            <td>100</td>
-                            <td>100,000</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>لايكات إنستغرام | حسابات حقيقية ونشطة</td>
-                            <td style="color: #00ff66;">$0.45</td>
-                            <td>50</td>
-                            <td>50,000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+    <div id="page-order" class="page active">
         <div class="panel-card">
             <div class="card-title">
                 <i class="fa-solid fa-cart-plus"></i> إنشاء طلب جديد
@@ -241,14 +253,143 @@
                 </div>
                 <button type="submit" class="btn-submit">تأكيد وإرسال الطلب الآن ⚡</button>
             </form>
-            
-            <div id="responseMessage"></div>
+            <div id="responseMessage" style="margin-top: 15px; text-align: center;"></div>
+        </div>
+    </div>
+
+    <div id="page-services" class="page">
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-list-check"></i> قائمة الخدمات المتوفرة
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الخدمة</th>
+                            <th>السعر / 1K</th>
+                            <th>الأدنى</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>متابعين إنستغرام | سرعة فائقة وضمان</td>
+                            <td style="color: #00ff66;">$1.00</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>لايكات إنستغرام | حسابات حقيقية ونشطة</td>
+                            <td style="color: #00ff66;">$0.45</td>
+                            <td>50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-deposit" class="page">
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-wallet"></i> شحن حسابك
+            </div>
+            <p class="info-text">اختر طريقة الدفع المناسبة لك لإضافة رصيد فوري إلى حسابك لتتمكن من استخدام الخدمات الإلكترونية.</p>
+            <div class="form-group">
+                <label>طريقة الشحن:</label>
+                <select id="paymentMethod">
+                    <option value="asia">آسيا سيل (رصيد / تحويل)</option>
+                    <option value="zain">زين كاش (Zain Cash)</option>
+                    <option value="crypto">العملات الرقمية (USDT)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>المبلغ المطلوب شحنه ($):</label>
+                <input type="number" placeholder="مثال: 10">
+            </div>
+            <button class="btn-submit" onclick="alert('سيتم توجيهك لبوابة الدفع قريباً!')">الانتقال للدفع الآمن 💳</button>
+        </div>
+    </div>
+
+    <div id="page-support" class="page">
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-headset"></i> تذكرة دعم فني
+            </div>
+            <p class="info-text">هل واجهتك مشكلة في طلبك أو لديك استفسار؟ افتح تذكرة وسيرد عليك فريقنا بأقرب وقت.</p>
+            <div class="form-group">
+                <label>نوع الاستفسار:</label>
+                <select>
+                    <option>مشكلة في طلب سابق</option>
+                    <option>مشكلة في شحن الرصيد</option>
+                    <option>اقتراح أو استفسار عام</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>تفاصيل الرسالة أو رقم الطلب:</label>
+                <textarea rows="4" placeholder="اكتب تفاصيل مشكلتك هنا بدقة..."></textarea>
+            </div>
+            <button class="btn-submit" onclick="alert('تم إرسال تذكرتك بنجاح!')">إرسال التذكرة ✉️</button>
+        </div>
+    </div>
+
+    <div id="page-about" class="page">
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-circle-info"></i> حول THANATOS CYBER
+            </div>
+            <p class="info-text">منصة متكاملة متخصصة بتقديم حلول التسويق الرقمي وتزويد الحسابات بأعلى معايير السرعة والأمان.</p>
+            <p class="info-text">🔒 جميع المعاملات والطلبات تتم بشكل تلقائي ومشفر بالكامل لضمان سرية حسابات عملائنا.</p>
+            <p class="info-text" style="text-align: center; color: var(--neon-blue); margin-top: 15px; font-weight: bold;">تابعنا على تليجرام: @jfghdbot</p>
         </div>
     </div>
 </div>
 
+<nav class="bottom-nav">
+    <button class="nav-item active" onclick="switchPage('page-order', this)">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>طلب جديد</span>
+    </button>
+    <button class="nav-item" onclick="switchPage('page-services', this)">
+        <i class="fa-solid fa-table-list"></i>
+        <span>الخدمات</span>
+    </button>
+    <button class="nav-item" onclick="switchPage('page-deposit', this)">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <span>شحن</span>
+    </button>
+    <button class="nav-item" onclick="switchPage('page-support', this)">
+        <i class="fa-solid fa-headset"></i>
+        <span>الدعم</span>
+    </button>
+    <button class="nav-item" onclick="switchPage('page-about', this)">
+        <i class="fa-solid fa-user-gear"></i>
+        <span>من نحن</span>
+    </button>
+</nav>
+
 <script>
-    // ⚠️ استبدل هذه البيانات ببيانات مزودك الحقيقية
+    // جافاسكريبت للتحول والتنقل الذكي بين الـ 5 صفحات
+    function switchPage(pageId, element) {
+        // إخفاء جميع الصفحات
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+        
+        // إظهار الصفحة المطلوبة
+        document.getElementById(pageId).classList.add('active');
+        
+        // تعديل حالة الزر النشط بالشريط السفلي
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+        
+        // إعادة التمرير لأعلى الصفحة عند التنقل
+        window.scrollTo(0, 0);
+    }
+
+    // كود معالجة الطلبات البرمجي الخاص بك
     const API_URL = "https://thanatos.com/api/v2"; 
     const API_KEY = "YOUR_ACTUAL_API_KEY"; 
 
@@ -259,7 +400,6 @@
         messageDiv.innerText = "جاري معالجة طلبك الفاخر... ⚡";
         messageDiv.style.color = "var(--neon-blue)";
 
-        // تجهيز البيانات بصيغة FormData لأن معظم سيرفرات SMM تقبلها هكذا مباشرة
         const payload = new FormData();
         payload.append('key', API_KEY);
         payload.append('action', 'add');
@@ -268,7 +408,6 @@
         payload.append('quantity', document.getElementById('quantity').value);
 
         try {
-            // إرسال الطلب مباشرة من المتصفح إلى سيرفر المزود
             const response = await fetch(API_URL, {
                 method: 'POST',
                 body: payload
@@ -287,7 +426,7 @@
                 messageDiv.style.color = "#00ff66";
             }
         } catch (error) {
-            messageDiv.innerText = "❌ حدث خطأ أثناء الاتصال بسيرفر المزود (قد يكون بسبب حماية CORS)";
+            messageDiv.innerText = "❌ حدث خطأ أثناء الاتصال بسيرفر المزود (CORS)";
             messageDiv.style.color = "#ff4a4a";
         }
     });
