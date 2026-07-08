@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ لوحة الخدمات الرقمية الفاخرة | SMM Panel</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #0a1118;
+            --bg-card: #111e2e;
+            --neon-blue: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #8fa0b5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px solid var(--bg-card);
+        }
+
+        header h1 {
+            color: var(--neon-blue);
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px var(--neon-glow);
+            margin-bottom: 10px;
+        }
+
+        .counter-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 15px var(--neon-glow);
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        .counter-badge span {
+            color: var(--neon-blue);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .panel-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(143, 160, 181, 0.1);
+        }
+
+        th {
+            color: var(--neon-blue);
+            font-weight: 600;
+        }
+
+        td { color: var(--text-main); }
+        .text-muted { color: var(--text-muted); }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-main);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #00b4d8, var(--neon-blue));
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--neon-glow);
+        }
+
+        #responseMessage {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>💎 THANATOS CYBER</h1>
+        <div class="counter-badge">
+            <i class="fa-solid fa-users-viewfinder"></i>
+            المستخدمين النشطين اليوم: <span>387,823 daily users</span>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-list-check"></i> قائمة الخدمات المتوفرة
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الخدمة</th>
+                            <th>السعر لكل 1000</th>
+                            <th>الأدنى</th>
+                            <th>الأقصى</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>متابعين إنستغرام | سرعة فائقة وضمان 30 يوم</td>
+                            <td style="color: #00ff66;">$1.00</td>
+                            <td>100</td>
+                            <td>100,000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>لايكات إنستغرام | حسابات حقيقية ونشطة</td>
+                            <td style="color: #00ff66;">$0.45</td>
+                            <td>50</td>
+                            <td>50,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <div class="card-title">
+                <i class="fa-solid fa-cart-plus"></i> إنشاء طلب جديد
+            </div>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label>اختر الخدمة:</label>
+                    <select id="serviceSelect">
+                        <option value="1">متابعين إنستغرام — $1.00</option>
+                        <option value="2">لايكات إنستغرام — $0.45</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الرابط المستهدف (Link):</label>
+                    <input type="url" id="targetLink" placeholder="https://instagram.com" required>
+                </div>
+                <div class="form-group">
+                    <label>الكمية المطلوب تزويدها:</label>
+                    <input type="number" id="quantity" min="50" placeholder="مثال: 1000" required>
+                </div>
+                <button type="submit" class="btn-submit">تأكيد وإرسال الطلب الآن ⚡</button>
+            </form>
+            
+            <div id="responseMessage"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ⚠️ استبدل هذه البيانات ببيانات مزودك الحقيقية
+    const API_URL = "https://thanatos.com/api/v2"; 
+    const API_KEY = "YOUR_ACTUAL_API_KEY"; 
+
+    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        
+        const messageDiv = document.getElementById('responseMessage');
+        messageDiv.innerText = "جاري معالجة طلبك الفاخر... ⚡";
+        messageDiv.style.color = "var(--neon-blue)";
+
+        // تجهيز البيانات بصيغة FormData لأن معظم سيرفرات SMM تقبلها هكذا مباشرة
+        const payload = new FormData();
+        payload.append('key', API_KEY);
+        payload.append('action', 'add');
+        payload.append('service', document.getElementById('serviceSelect').value);
+        payload.append('link', document.getElementById('targetLink').value);
+        payload.append('quantity', document.getElementById('quantity').value);
+
+        try {
+            // إرسال الطلب مباشرة من المتصفح إلى سيرفر المزود
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: payload
+            });
+
+            const result = await response.json();
+
+            if (result.order) {
+                messageDiv.innerText = "✨ تم إرسال الطلب بنجاح! رقم الطلب: " + result.order;
+                messageDiv.style.color = "#00ff66"; 
+            } else if (result.error) {
+                messageDiv.innerText = "❌ فشل الطلب: " + result.error;
+                messageDiv.style.color = "#ff4a4a";
+            } else {
+                messageDiv.innerText = "✨ تم تمرير الطلب بنجاح للمزود!";
+                messageDiv.style.color = "#00ff66";
+            }
+        } catch (error) {
+            messageDiv.innerText = "❌ حدث خطأ أثناء الاتصال بسيرفر المزود (قد يكون بسبب حماية CORS)";
+            messageDiv.style.color = "#ff4a4a";
+        }
+    });
+</script>
+
+</body>
+</html>
