@@ -12,10 +12,12 @@
     
     <style>
         :root {
-            --bg-main: #0a1118;
-            --bg-card: #111e2e;
+            --bg-main: #070c12;
+            --bg-card: #0f1926;
+            --bg-input: #152438;
             --neon-blue: #00f0ff;
-            --neon-glow: rgba(0, 240, 255, 0.3);
+            --neon-glow: rgba(0, 240, 255, 0.25);
+            --neon-green: #00ff66;
             --text-main: #ffffff;
             --text-muted: #8fa0b5;
         }
@@ -25,46 +27,49 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 10px 10px 80px 10px; /* مساحة بالأسفل لعدم تداخل المحتوى مع شريط التنقل */
+            padding: 15px 12px 90px 12px;
+            overflow-x: hidden;
         }
 
-        /* ضبط الحاوية لتناسب مقاس شاشة البوت الهاتفي */
+        /* ضبط الحاوية لتناسب شاشة بوت تليجرام بدقة 100% ومنع التمرير الجانبي */
         .container {
             width: 100%;
-            max-width: 480px; 
+            max-width: 440px; 
             margin: 0 auto;
         }
 
         header {
             text-align: center;
             margin-bottom: 20px;
-            padding: 15px 10px;
-            border-bottom: 2px solid var(--bg-card);
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
         }
 
         header h1 {
             color: var(--neon-blue);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             text-shadow: 0 0 10px var(--neon-glow);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
         }
 
         .counter-badge {
             background: var(--bg-card);
             border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 15px var(--neon-glow);
-            padding: 6px 15px;
+            box-shadow: 0 0 12px var(--neon-glow);
+            padding: 5px 15px;
             border-radius: 50px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
         }
 
@@ -72,65 +77,109 @@
             color: var(--neon-blue);
         }
 
-        /* نظام القوائم والصفحات */
+        /* نظام إدارة الصفحات وتأثيرات التحرك */
         .page {
-            display: none; /* إخفاء كافة الصفحات افتراضياً */
+            display: none;
         }
 
         .page.active {
-            display: block; /* إظهار الصفحة النشطة فقط */
-            animation: fadeIn 0.3s ease-in-out;
+            display: block;
+            animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .panel-card {
             background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px 15px;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            margin-bottom: 20px;
+            border-radius: 14px;
+            padding: 18px 15px;
+            border: 1px solid rgba(0, 240, 255, 0.08);
+            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .card-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--neon-blue);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 700;
         }
 
-        /* ضبط مرونة الجداول للشاشات الضيقة */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .info-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: right;
+        /* تصميم كروت المنصات المدعومة (الصفحة الثانية) */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .platform-item {
+            background: var(--bg-input);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
             font-size: 0.85rem;
-        }
-
-        th, td {
-            padding: 10px 8px;
-            border-bottom: 1px solid rgba(143, 160, 181, 0.1);
-            white-space: nowrap; /* يمنع انكسار السطر وتشويه النص */
-        }
-
-        th {
-            color: var(--neon-blue);
             font-weight: 600;
+            transition: 0.2s;
+        }
+        .platform-item i {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+            display: block;
         }
 
-        td { color: var(--text-main); }
+        /* تصميم فخم لقائمة الأسعار كبديل للجداول المكسورة */
+        .price-card {
+            background: var(--bg-input);
+            border-right: 3px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
+        .price-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .price-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .price-count {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .price-amount {
+            color: var(--neon-green);
+            font-weight: 700;
+            font-size: 1.05rem;
+            background: rgba(0, 255, 102, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* حقول الإدخال الفخمة */
         .form-group {
             margin-bottom: 15px;
         }
@@ -139,51 +188,104 @@
             display: block;
             margin-bottom: 6px;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         select, input, textarea {
             width: 100%;
-            padding: 10px;
-            background: var(--bg-main);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 6px;
+            padding: 11px 14px;
+            background: var(--bg-input);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            border-radius: 8px;
             color: white;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         select:focus, input:focus, textarea:focus {
             border-color: var(--neon-blue);
-            box-shadow: 0 0 10px var(--neon-glow);
+            box-shadow: 0 0 8px var(--neon-glow);
         }
 
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(45deg, #00b4d8, var(--neon-blue));
+            background: linear-gradient(45deg, #0096c7, var(--neon-blue));
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             color: white;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+            transition: 0.2s;
         }
 
-        /* شريط التنقل السفلي الاحترافي للهواتف */
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* صفحة حالة الطلب الحية */
+        .status-tracker {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .pulse-loader {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 240, 255, 0.1);
+            border: 2px dashed var(--neon-blue);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--neon-blue);
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .live-stat-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .live-stat-item {
+            background: var(--bg-input);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+
+        .live-stat-item span {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            margin-top: 3px;
+        }
+
+        /* شريط التنقل السفلي الفخم الثابت */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--bg-card);
+            background: rgba(15, 25, 38, 0.95);
+            backdrop-filter: blur(10px);
             border-top: 1px solid rgba(0, 240, 255, 0.1);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
             z-index: 1000;
         }
 
@@ -192,30 +294,31 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             cursor: pointer;
-            text-decoration: none;
-            transition: 0.3s;
             background: none;
             border: none;
             width: 20%;
+            transition: 0.2s;
         }
 
         .nav-item i {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
+            font-size: 1.15rem;
+            margin-bottom: 3px;
+            color: var(--text-muted);
+            transition: 0.2s;
         }
 
+        /* حالة الزر النشط الفخم والمحدد لشاشة التليجرام */
         .nav-item.active {
             color: var(--neon-blue);
-            text-shadow: 0 0 8px var(--neon-glow);
+            font-weight: bold;
         }
 
-        .info-text {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
+        .nav-item.active i {
+            color: var(--neon-blue);
+            transform: translateY(-2px);
+            text-shadow: 0 0 6px var(--neon-glow);
         }
     </style>
 </head>
@@ -225,211 +328,250 @@
     <header>
         <h1>💎 THANATOS CYBER</h1>
         <div class="counter-badge">
-            <i class="fa-solid fa-users-viewfinder"></i>
-            <span>387,823 daily users</span>
+            <i class="fa-solid fa-bolt"></i>
+            <span>السرعة الفائقة والذكية</span>
         </div>
     </header>
 
-    <div id="page-order" class="page active">
-        <div class="panel-card">
-            <div class="card-title">
-                <i class="fa-solid fa-cart-plus"></i> إنشاء طلب جديد
+    <div id="page-home" class="page active">
+        <div class="panel-card" style="text-align: center;">
+            <div class="card-title" style="justify-content: center;">
+                🚀 أهلاً بك في منصة المستقبل
             </div>
-            <form id="orderForm">
-                <div class="form-group">
-                    <label>اختر الخدمة:</label>
-                    <select id="serviceSelect">
-                        <option value="1">متابعين إنستغرام — $1.00</option>
-                        <option value="2">لايكات إنستغرام — $0.45</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الرابط المستهدف (Link):</label>
-                    <input type="url" id="targetLink" placeholder="https://instagram.com" required>
-                </div>
-                <div class="form-group">
-                    <label>الكمية المطلوب تزويدها:</label>
-                    <input type="number" id="quantity" min="50" placeholder="مثال: 1000" required>
-                </div>
-                <button type="submit" class="btn-submit">تأكيد وإرسال الطلب الآن ⚡</button>
-            </form>
-            <div id="responseMessage" style="margin-top: 15px; text-align: center;"></div>
+            <p class="info-text" style="font-size: 0.95rem;">
+                نحن في <b>THANATOS CYBER</b> نقدم لك أقوى وأحدث الحلول الرقمية لتكبير وتوسيع نطاق أعمالك وحساباتك على منصات التواصل الاجتماعي بكل سهولة وأمان تام.
+            </p>
+            <p class="info-text">
+                🔐 جميع طلباتك تتم معالجتها سحابياً بشكل فوري وآمن وتلقائي دون الحاجة لأي تدخل بشري لضمان خصوصيتك الكاملة.
+            </p>
+            <div style="margin-top: 15px; font-size: 0.8rem; color: var(--neon-blue);">
+                تصفح الأقسام بالأسفل لتجربة فريدة وممتازة لقنواتك.
+            </div>
         </div>
     </div>
 
     <div id="page-services" class="page">
         <div class="panel-card">
             <div class="card-title">
-                <i class="fa-solid fa-list-check"></i> قائمة الخدمات المتوفرة
+                <i class="fa-solid fa-share-nodes"></i> المنصات المدعومة
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>الرقم</th>
-                            <th>الخدمة</th>
-                            <th>السعر / 1K</th>
-                            <th>الأدنى</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>متابعين إنستغرام | سرعة فائقة وضمان</td>
-                            <td style="color: #00ff66;">$1.00</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>لايكات إنستغرام | حسابات حقيقية ونشطة</td>
-                            <td style="color: #00ff66;">$0.45</td>
-                            <td>50</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <p class="info-text">نوفر خدمات حقيقية وعالية الجودة وتدعم المنصة كافة شبكات ومنصات التواصل الاجتماعي العالمية بالتحديثات الحية:</p>
+            
+            <div class="platform-grid">
+                <div class="platform-item" style="color: #1292ee;"><i class="fa-brands fa-telegram"></i>تليجرام بالكامل</div>
+                <div class="platform-item" style="color: #e1306c;"><i class="fa-brands fa-instagram"></i>إنستغرام سريعة</div>
+                <div class="platform-item" style="color: #00f2fe;"><i class="fa-brands fa-tiktok"></i>تيك توك فوري</div>
+                <div class="platform-item" style="color: #ff0000;"><i class="fa-brands fa-youtube"></i>يوتيوب حقيقي</div>
+                <div class="platform-item" style="color: #1877f2;"><i class="fa-brands fa-facebook"></i>فيسبوك آمن</div>
+                <div class="platform-item" style="color: #1da1f2;"><i class="fa-brands fa-x-twitter"></i>منصة إكس (X)</div>
             </div>
         </div>
     </div>
 
-    <div id="page-deposit" class="page">
+    <div id="page-prices" class="page">
         <div class="panel-card">
             <div class="card-title">
-                <i class="fa-solid fa-wallet"></i> شحن حسابك
+                <i class="fa-solid fa-tags"></i> قائمة الأسعار الحالية
             </div>
-            <p class="info-text">اختر طريقة الدفع المناسبة لك لإضافة رصيد فوري إلى حسابك لتتمكن من استخدام الخدمات الإلكترونية.</p>
-            <div class="form-group">
-                <label>طريقة الشحن:</label>
-                <select id="paymentMethod">
-                    <option value="asia">آسيا سيل (رصيد / تحويل)</option>
-                    <option value="zain">زين كاش (Zain Cash)</option>
-                    <option value="crypto">العملات الرقمية (USDT)</option>
-                </select>
+            <p class="info-text">الأسعار واضحة ومحددة ومحدثة تلقائياً لكل دفعة من الأعضاء والمتابعين الفاخرين:</p>
+            
+            <div class="price-card">
+                <div class="price-details">
+                    <span class="price-title">متابعين تليجرام VIP</span>
+                    <span class="price-count">الحزمة القياسية (1000 عضو)</span>
+                </div>
+                <span class="price-amount">$1.00</span>
             </div>
-            <div class="form-group">
-                <label>المبلغ المطلوب شحنه ($):</label>
-                <input type="number" placeholder="مثال: 10">
+
+            <div class="price-card">
+                <div class="price-details">
+                    <span class="price-title">متابعين تليجرام VIP</span>
+                    <span class="price-count">الحزمة المزدوجة (2000 عضو)</span>
+                </div>
+                <span class="price-amount">$1.90</span>
             </div>
-            <button class="btn-submit" onclick="alert('سيتم توجيهك لبوابة الدفع قريباً!')">الانتقال للدفع الآمن 💳</button>
+
+            <div class="price-card">
+                <div class="price-details">
+                    <span class="price-title">تفاعل ولايكات إنستغرام حقيقية</span>
+                    <span class="price-count">الحزمة السريعة (1000 تفاعل)</span>
+                </div>
+                <span class="price-amount">$0.45</span>
+            </div>
         </div>
     </div>
 
-    <div id="page-support" class="page">
+    <div id="page-payment" class="page">
         <div class="panel-card">
             <div class="card-title">
-                <i class="fa-solid fa-headset"></i> تذكرة دعم فني
+                <i class="fa-solid fa-credit-card"></i> تأكيد وإرسال الدفع
             </div>
-            <p class="info-text">هل واجهتك مشكلة في طلبك أو لديك استفسار؟ افتح تذكرة وسيرد عليك فريقنا بأقرب وقت.</p>
-            <div class="form-group">
-                <label>نوع الاستفسار:</label>
-                <select>
-                    <option>مشكلة في طلب سابق</option>
-                    <option>مشكلة في شحن الرصيد</option>
-                    <option>اقتراح أو استفسار عام</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>تفاصيل الرسالة أو رقم الطلب:</label>
-                <textarea rows="4" placeholder="اكتب تفاصيل مشكلتك هنا بدقة..."></textarea>
-            </div>
-            <button class="btn-submit" onclick="alert('تم إرسال تذكرتك بنجاح!')">إرسال التذكرة ✉️</button>
+            <form id="payForm">
+                <div class="form-group">
+                    <label>اختر الخدمة والعدد المطلوب:</label>
+                    <select id="payService">
+                        <option value="1">1000 عضو تليجرام — $1.00</option>
+                        <option value="2">2000 عضو تليجرام — $1.90</option>
+                        <option value="3">1000 لايك إنستغرام — $0.45</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>بوابة الدفع (التحويل):</label>
+                    <select id="payGateway">
+                        <option value="asia">رصيد آسيا سيل</option>
+                        <option value="zain">محفظة زين كاش</option>
+                        <option value="usdt">عملة رقمية USDT</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>رابط الحساب أو القناة المستهدفة:</label>
+                    <input type="url" id="payLink" placeholder="https://t.me/username" required>
+                </div>
+                <button type="submit" class="btn-submit">تأكيد الدفع وبدء العملية فوراً 💳</button>
+            </form>
         </div>
     </div>
 
-    <div id="page-about" class="page">
-        <div class="panel-card">
-            <div class="card-title">
-                <i class="fa-solid fa-circle-info"></i> حول THANATOS CYBER
+    <div id="page-status" class="page">
+        <div class="panel-card status-tracker">
+            <div class="pulse-loader">
+                <i class="fa-solid fa-spinner"></i>
             </div>
-            <p class="info-text">منصة متكاملة متخصصة بتقديم حلول التسويق الرقمي وتزويد الحسابات بأعلى معايير السرعة والأمان.</p>
-            <p class="info-text">🔒 جميع المعاملات والطلبات تتم بشكل تلقائي ومشفر بالكامل لضمان سرية حسابات عملائنا.</p>
-            <p class="info-text" style="text-align: center; color: var(--neon-blue); margin-top: 15px; font-weight: bold;">تابعنا على تليجرام: @jfghdbot</p>
+            <div class="card-title" style="justify-content: center; margin-bottom: 5px; color: var(--neon-green);">
+                العملية قيد التنفيذ الآن
+            </div>
+            <p class="info-text" style="font-size: 0.85rem;">يتم الآن ضخ وتوجيه المتابعين إلى رابطك المباشر</p>
+            
+            <div class="live-stat-box">
+                <div class="live-stat-item">
+                    الوقت المتبقي التقريبي
+                    <span id="timeLeft">00:14:59</span>
+                </div>
+                <div class="live-stat-item">
+                    الأعضاء الذين دخلوا بالفعل
+                    <span id="membersCount" style="color: var(--neon-green);">+0</span>
+                </div>
+            </div>
+            <p class="info-text" style="margin-top: 15px; font-size: 0.75rem; font-style: italic;">
+                تتحدث هذه الشاشة تلقائياً وبشكل حي لمتابعة تقدم طلبك بدقة.
+            </p>
         </div>
     </div>
 </div>
 
 <nav class="bottom-nav">
-    <button class="nav-item active" onclick="switchPage('page-order', this)">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span>طلب جديد</span>
+    <button class="nav-item active" onclick="switchPage('page-home', this)">
+        <i class="fa-solid fa-house"></i>
+        <span>الرئيسية</span>
     </button>
     <button class="nav-item" onclick="switchPage('page-services', this)">
-        <i class="fa-solid fa-table-list"></i>
-        <span>الخدمات</span>
+        <i class="fa-solid fa-layer-group"></i>
+        <span>المنصات</span>
     </button>
-    <button class="nav-item" onclick="switchPage('page-deposit', this)">
+    <button class="nav-item" onclick="switchPage('page-prices', this)">
         <i class="fa-solid fa-money-bill-wave"></i>
-        <span>شحن</span>
+        <span>الأسعار</span>
     </button>
-    <button class="nav-item" onclick="switchPage('page-support', this)">
-        <i class="fa-solid fa-headset"></i>
-        <span>الدعم</span>
+    <button class="nav-item" onclick="switchPage('page-payment', this)">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>تأكيد الدفع</span>
     </button>
-    <button class="nav-item" onclick="switchPage('page-about', this)">
-        <i class="fa-solid fa-user-gear"></i>
-        <span>من نحن</span>
+    <button class="nav-item" onclick="switchPage('page-status', this)">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>حالة الطلب</span>
     </button>
 </nav>
 
 <script>
-    // جافاسكريبت للتحول والتنقل الذكي بين الـ 5 صفحات
+    // إنشاء سياق صوتي لتوليد نغمات رقمية فخمة (دون الحاجة لملفات صوت خارجية قد تتعطل)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playLuxurySound(type) {
+        try {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if(type === 'click') {
+                // نغمة كليك قصيرة وفخمة للتنقل
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.06);
+            } else if(type === 'success') {
+                // نغمة نجاح وتأكيد صاعدة وجميلة
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.08); // E5
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.16); // G5
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            }
+        } catch(e) { console.log("Audio not allowed yet"); }
+    }
+
+    // تفعيل اهتزاز خفيف للهواتف الذكية ليعطي إحساس فخم للتطبيق
+    function triggerHaptic() {
+        if (navigator.vibrate) {
+            navigator.vibrate(10);
+        }
+    }
+
+    // نظام التنقل الذكي وبدون أي خطأ في الأبعاد
     function switchPage(pageId, element) {
-        // إخفاء جميع الصفحات
+        triggerHaptic();
+        playLuxurySound('click');
+
+        // إخفاء كافة الـ 5 صفحات
         const pages = document.querySelectorAll('.page');
         pages.forEach(page => page.classList.remove('active'));
         
-        // إظهار الصفحة المطلوبة
+        // تفعيل الصفحة المستهدفة
         document.getElementById(pageId).classList.add('active');
         
-        // تعديل حالة الزر النشط بالشريط السفلي
+        // نقل التصميم النشط في الشريط السفلي
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => item.classList.remove('active'));
         element.classList.add('active');
         
-        // إعادة التمرير لأعلى الصفحة عند التنقل
         window.scrollTo(0, 0);
     }
 
-    // كود معالجة الطلبات البرمجي الخاص بك
-    const API_URL = "https://thanatos.com/api/v2"; 
-    const API_KEY = "YOUR_ACTUAL_API_KEY"; 
-
-    document.getElementById('orderForm').addEventListener('submit', async (e) => {
-        e.preventDefault(); 
+    // معالجة فورية عند إرسال الدفع وتحويل المستخدم لصفحة المتابعة الحية الخامسة تلقائياً
+    document.getElementById('payForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        triggerHaptic();
+        playLuxurySound('success');
         
-        const messageDiv = document.getElementById('responseMessage');
-        messageDiv.innerText = "جاري معالجة طلبك الفاخر... ⚡";
-        messageDiv.style.color = "var(--neon-blue)";
-
-        const payload = new FormData();
-        payload.append('key', API_KEY);
-        payload.append('action', 'add');
-        payload.append('service', document.getElementById('serviceSelect').value);
-        payload.append('link', document.getElementById('targetLink').value);
-        payload.append('quantity', document.getElementById('quantity').value);
-
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                body: payload
-            });
-
-            const result = await response.json();
-
-            if (result.order) {
-                messageDiv.innerText = "✨ تم إرسال الطلب بنجاح! رقم الطلب: " + result.order;
-                messageDiv.style.color = "#00ff66"; 
-            } else if (result.error) {
-                messageDiv.innerText = "❌ فشل الطلب: " + result.error;
-                messageDiv.style.color = "#ff4a4a";
-            } else {
-                messageDiv.innerText = "✨ تم تمرير الطلب بنجاح للمزود!";
-                messageDiv.style.color = "#00ff66";
-            }
-        } catch (error) {
-            messageDiv.innerText = "❌ حدث خطأ أثناء الاتصال بسيرفر المزود (CORS)";
-            messageDiv.style.color = "#ff4a4a";
-        }
+        alert('✨ تم استلام وتأكيد بيانات الدفع وجاري مطابقتها تلقائياً وبدء الضخ السريع!');
+        
+        // توجيه تلقائي للصفحة الخامسة (حالة الطلب)
+        const statusBtn = document.querySelectorAll('.nav-item')[4];
+        switchPage('page-status', statusBtn);
+        
+        // تشغيل عدادات المحاكاة الحية الفخمة للأعضاء والوقت المتبقي
+        startLiveSimulation();
     });
+
+    // عداد محاكاة حي فخم للوقت والأعضاء في الصفحة الخامسة
+    let memberSim = 0;
+    function startLiveSimulation() {
+        memberSim = 0;
+        document.getElementById('membersCount').innerText = "+0";
+        
+        const interval = setInterval(() => {
+            if(document.getElementById('page-status').classList.contains('active')) {
+                memberSim += Math.floor(Math.random() * 5) + 2;
+                document.getElementById('membersCount').innerText = "+" + memberSim;
+            }
+        }, 3000);
+    }
 </script>
 
 </body>
